@@ -3,6 +3,8 @@ import secrets
 
 import numpy as np
 
+from src.tools.utils import checknumber
+
 MAX_DICE_COUNT = 100  # 一次摇动最多的骰子数量
 MAX_OUTPUT_CNT = 50  # 输出的最多数据量
 MAX_OUTPUT_LEN = 200  # 输出的最大长度
@@ -89,11 +91,11 @@ class Dice(DiceItemBase):
         if positive and not len(dice_adv):
             dice_adv = "1"  # K/Q后没有值默认为1
         # 语法合法检定
-        if not dice_count.isdigit():
+        if not checknumber(dice_count):
             raise DiceValueError("无效的骰子数量", dice_count)
-        if not dice_sides.isdigit():
+        if not checknumber(dice_sides):
             raise DiceValueError("无效的骰子面数", dice_sides)
-        if not dice_adv.isdigit():
+        if not checknumber(dice_adv):
             raise DiceValueError("无效的优劣势", dice_adv)
         return (int(dice_count), int(dice_sides), int(dice_adv), positive)
 
@@ -170,7 +172,7 @@ class FudgeDice(DiceItemBase):
             dice_count = temp[0]
 
         # 语法合法检定
-        if not dice_count.isdigit():
+        if not checknumber(dice_count):
             raise DiceValueError("无效的骰子数量。", dice_count)
         return (int(dice_count), 0)
 
@@ -228,7 +230,7 @@ class BonusPunishDice(DiceItemBase):
                 dice_count = temp[1]
 
         # 语法合法检定
-        if not dice_count.isdigit():
+        if not checknumber(dice_count):
             raise DiceValueError("无效的骰子数量。", dice_count)
 
         return (int(dice_count), positive)
@@ -306,15 +308,15 @@ class WODDice(DiceItemBase):
         dice_success_line_max = match.group(4) if match.group(4) else "0"  # 最大成功线
         dice_sides = match.group(5) if match.group(5) else "10"  # 骰子面数
         # 语法合法检定
-        if not dice_count.isdigit():
+        if not checknumber(dice_count):
             raise DiceValueError("无效的骰子数量。", dice_count)
-        if not dice_add_line.isdigit():
+        if not checknumber(dice_add_line):
             raise DiceValueError("无效的加骰线。", dice_add_line)
-        if not dice_success_line.isdigit():
+        if not checknumber(dice_success_line):
             raise DiceValueError("无效的成功线。", dice_success_line)
-        if not dice_success_line_max.isdigit():
+        if not checknumber(dice_success_line_max):
             raise DiceValueError("无效的成功线。", dice_success_line_max)
-        if not dice_sides.isdigit():
+        if not checknumber(dice_sides):
             raise DiceValueError("无效的骰子面数。", dice_sides)
             
         return (int(dice_count), int(dice_add_line), int(dice_success_line), int(dice_success_line_max), int(dice_sides))
@@ -411,11 +413,11 @@ class DXDice(DiceItemBase):
         dice_add_line = match.group(2)  # 加骰线
         dice_sides = match.group(3) if match.group(3) else "10"  # 骰子面数
         # 语法合法检定
-        if not dice_count.isdigit():
+        if not checknumber(dice_count):
             raise DiceValueError("无效的骰子数量。", dice_count)
-        if not dice_add_line.isdigit():
+        if not checknumber(dice_add_line):
             raise DiceValueError("无效的加骰线。", dice_add_line)
-        if not dice_sides.isdigit():
+        if not checknumber(dice_sides):
             raise DiceValueError("无效的骰子面数。", dice_sides)
         return (int(dice_count), int(dice_add_line), int(dice_sides))
 

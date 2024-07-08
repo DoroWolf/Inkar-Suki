@@ -4,6 +4,7 @@ import re
 from simpleeval import SimpleEval, FunctionNotDefined, NameNotDefined
 
 from src.tools.basic import *
+from src.tools.utils import checknumber
 from .dice import *
 
 # 配置常量
@@ -72,7 +73,7 @@ def parse_dice_expression(dices):
         dices = dices.split("#")[1]
     else:
         times = "1"
-    if not times.isdigit():
+    if not checknumber(times):
         return None, None, None, DiceValueError("唔……音卡无法解析骰子表达式：\n无效的投骰次数。").message
 
     dice_expr_list = re.split(f"{math_func_pattern}|" + "|".join(dice_patterns), dices, flags=re.I)
@@ -115,7 +116,7 @@ def parse_dice_expression(dices):
             elif "D" in item:
                 dice_count += 1
                 dice_expr_list[j] = Dice(item)
-            elif item.isdigit():
+            elif checknumber(item):
                 dice_count += 1
         except (DiceSyntaxError, DiceValueError) as ex:
             errmsg = f"第{dice_count}项发生：" + ex.message
@@ -131,13 +132,13 @@ def insert_multiply(lst):
         if i == 0:
             result.append(lst[i])
         else:
-            if lst[i-1][-1].isdigit() and lst[i][0].isdigit():
+            if checknumber(lst[i-1][-1]) and checknumber(lst[i][0]):
                 result.append(asterisk)
             elif lst[i-1][-1] == ")" and lst[i][0] == "(":
                 result.append(asterisk)
-            elif lst[i-1][-1].isdigit() and lst[i][0] == "(":
+            elif checknumber(lst[i-1][-1]) and lst[i][0] == "(":
                 result.append(asterisk)
-            elif lst[i-1][-1] == ")" and lst[i][0].isdigit():
+            elif lst[i-1][-1] == ")" and checknumber(lst[i][0]):
                 result.append(asterisk)
             result.append(lst[i])
     return result

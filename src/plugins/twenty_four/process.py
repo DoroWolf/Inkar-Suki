@@ -3,6 +3,8 @@ import random
 
 from simpleeval import simple_eval
 
+from src.tools.utils import checknumber
+
 def calc(expr):
     try:
         return simple_eval(expr)
@@ -19,8 +21,8 @@ def check_valid(expr):
     num_numbers = 0
     while i < len(expr):
         char = expr[i]
-        if char.isdigit():
-            while i < len(expr) and expr[i].isdigit():
+        if checknumber(char):
+            while i < len(expr) and checknumber(expr[i]):
                 i += 1
             num_numbers += 1
         elif char in valid_chars_set:
@@ -73,9 +75,9 @@ def contains_all_numbers(expr, numbers):
     i = 0
     while i < len(expr):
         char = expr[i]
-        if char.isdigit():
+        if checknumber(char):
             number = char
-            while i + 1 < len(expr) and expr[i + 1].isdigit():
+            while i + 1 < len(expr) and checknumber(expr[i + 1]):
                 number += expr[i + 1]
                 i += 1
             if number in used_numbers:
