@@ -108,7 +108,7 @@ Inkar Suki 是一个集成多种功能的群聊机器人，基于 [Nonebot 2](ht
 
 ## 友情链接
 
-- [小可·Akaribot](https://github.com/Teahouse-Studios/akari-bot) - 茶馆群内 QQ 机器人（小可）by @OasisAkari；
+- [小可·Akaribot](https://github.com/Teahouse-Studios/akari-bot) - 茶馆群内机器人（小可）by @OasisAkari；
 - [轻雪机器人](https://bot.liteyuki.icu) - 神羽女生自用轻雪机器人 @Snowykami。
 
 ---
